@@ -1,0 +1,29 @@
+measure,reference,num,alp,range,example
+Agreeableness,Big Five Inventory-10 \parencite{rammstedt2007},2,0.26,1-5,I see myself as someone who is generally trusting
+Conscientiousness,Big Five Inventory-10 \parencite{rammstedt2007},2,0.55,1-5,I see myself as someone who does a thorough job
+Extraversion,Big Five Inventory-10 \parencite{rammstedt2007},2,0.50,1-5,"I see myself as someone who is outgoing, sociable"
+Neuroticism,Big Five Inventory-10 \parencite{rammstedt2007},2,0.66,1-5,I see myself as someone who gets nervous easily
+Openness,Big Five Inventory-10 \parencite{rammstedt2007},2,0.21,1-5,I see myself as someone who has an active imagination
+Orientation to Future Goals,Consideration of Future Consequences \parencite{enzler2015},4,0.71,1-5,I consider how things might be in the future
+Orientation to Immediate Goals,Consideration of Future Consequences \parencite{enzler2015},5,0.86,1-5,"I mainly act to satisfy my immediate concerns, figuring the future will take care of itself"
+Conspiracist Ideation,Conspiracist Ideation \parencite{lewandowsky2013},6,0.88,1-5,The Apollo moon landings never happened and were staged in a Hollywood film studio
+Environment-as-Ductile Worldview,Environmental Worldview Scale \parencite{price2014},6,0.81,1-5,If the balance of the natural environment is upset the whole system will collapse
+Environment-as-Elastic Worldview,Environmental Worldview Scale \parencite{price2014},6,0.85,1-5,The natural environment is capable of recovering from any damage humans may cause
+Knowledge Volume,Knowledge Volume \parencite{malka2009},1,na,1-4,How much do you feel you know about climate change?
+Perceptions of Carbon Emission Causes,Based on Mental Model Scale \parencite[Subscale: Perceived Causes of Climate Change;][]{bostrom2012},7,0.92,1-7,"Please indicate to what extent each of the following is a cause of climate change, to the best of your knowledge: people driving their cars"
+Perceptions of Environmental Harm Causes,Based on Mental Model Scale \parencite[Subscale: Perceived Causes of Climate Change;][]{bostrom2012},4,0.87,1-7,"Please indicate to what extent each of the following is a cause of climate change, to the best of your knowledge: air pollution from toxic chemicals"
+Perceptions of Natural Causes,Based on Mental Model Scale \parencite[Subscale: Perceived Causes of Climate Change;][]{bostrom2012},2,0.77,1-7,"Please indicate to what extent each of the following is a cause of climate change, to the best of your knowledge: volcanic eruptions"
+Perceived Personal Consequences,Mental Model Scale \parencite[Subscale: Perceived Consequences of Climate Change;][]{bostrom2012},3,0.89,1-7,Please rate for each of the following how likely it is as a consequence of climate change by the year 2050: food shortages where you live
+Perceived Societal Consequences,Mental Model Scale \parencite[Subscale: Perceived Consequences of Climate Change;][]{bostrom2012},8,0.96,1-7,Please rate for each of the following how likely it is as a consequence of climate change by the year 2050: food shortages in many parts of the world
+Perceived Human Contribution,Mental Model Scale \parencite[Subscale: Human Contribution;][]{bostrom2012},1,na,1-7,How likely do you think it is that human actions have changed global climate?
+Perceived Effectiveness of Carbon Policies,Mental Model Scale \parencite[Subscale: Perceived Effectiveness of Mitigative Action Policies;][]{bostrom2012},3,0.74,1-7,"Please rate for each step what effect you think it would have on climate change: requiring cars and trucks to have higher fuel efficiency (1 = Reduce or Stop Climate Change, 4 = Neither Reduce nor Increase, 7 = Increase Climate Change)"
+Perceived Effectiveness of Engineering Policies,Mental Model Scale \parencite[Subscale: Perceived Effectiveness of Mitigative Action Policies;][]{bostrom2012},3,0.40,1-7,"Please rate for each step what effect you think it would have on climate change: putting more dust in the atmosphere (1 = Reduce or Stop Climate Change, 4 = Neither Reduce nor Increase, 7 = Increase Climate Change)"
+Perceived Effectiveness of Green Policies,Mental Model Scale  \parencite[Subscale: Perceived Effectiveness of Mitigative Action Policies;][]{bostrom2012},5,0.91,1-7,"Please rate for each step what effect you think it would have on climate change: planting trees (1 = Reduce or Stop Climate Change, 4 = Neither Reduce nor Increase, 7 = Increase Climate Change)"
+Need for Cognition,Need for Cognition Scale (NCS-6) \parencite{linsdeholandacoelho2018},6,0.80,1-5,I would prefer complex to simple problems
+Political Ideology,na,1,na,1-7,"Please indicate the extent to which you identify yourself as politically left-wing or right-wing (1 = Very Left-Wing, 7 = Very Right-Wing)"
+System Justification,System Justification Scale \parencite{kay2003},8,0.86,1-9,Everyone has a fair shot at wealth and happiness
+Epistemic Scepticism,Items from \textcite{capstick2014},8,0.91,1-5,Climate change is just a natural fluctuation in Earth's temperatures
+Response Scepticism,Items from \textcite{capstick2014},7,0.89,1-5,There is no point in me doing anything about climate change because no-one else is
+Conservation Values,Short Schwartz Value Scale \parencite{lindeman2005},10,0.63,-2.94-5.54,"Please, rate the importance of the following values as a life-guiding principle for you: CONFORMITY (obedience, honouring parents and elders, self-discipline, politeness)"
+Self-Transcendence Values,Short Schwartz Value Scale \parencite{lindeman2005},10,0.69,-4.84-2.52,"Please, rate the importance of the following values as a life-guiding principle for you: BENEVOLENCE (helpfulness, honesty, forgiveness, loyalty, responsibility)"
+Worry about Climate Change,Item from Emotion Scale \parencite{smith2014},1,na,1-4,How strongly do you feel worry when you think about the issue of climate change?

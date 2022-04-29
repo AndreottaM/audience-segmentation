@@ -135,7 +135,7 @@ dat.clean <- dat.m %>%
   rename_v("mitig_sentiment_", "QID315_") %>%
   rename(ls = int)
 #4. Import Q sort data
-dat.m_qsort <- read.csv("../data-raw/study-3-qsort.csv", stringsAsFactors = F, header = F)
+dat.m_qsort <- read.csv("../data/study-3-qsort.csv", stringsAsFactors = F, header = F)
 #Assign data column names, based on schema used to create MySQL db, see ../study2/data/schema.txt
 colnames(dat.m_qsort) <- c(
   paste0("pref_sta_", 1:30),
@@ -709,11 +709,13 @@ df_qres2 <- read_csv(
 
 #From Study 3
 zsc_s3 <- q_results$zsc %>%
+  as.data.frame() %>%
   rownames_to_column('sta_id') %>%
   as.tibble %>%
   gather(zsc_f, z_s3, -sta_id)
 
 fsc_s3 <- q_results$zsc_n %>%
+  as.data.frame() %>%
   rownames_to_column('sta_id') %>%
   as.tibble %>%
   gather(fsc_f, f_s3, -sta_id)
@@ -1108,7 +1110,7 @@ m_change_v4 <- lmer(change_v[4], df_change, REML = FALSE)
 
 specify_decimal <- function(x, k) trimws(format(round(x, k), nsmall=k)) #for rounding
 
-#Figure 5 from Paper
+#Figure 3 from Paper
 
 apatheme=theme_bw()+
   theme(panel.grid.major = element_blank(),
@@ -1144,10 +1146,10 @@ df_update %>%
   theme(legend.position = "none")+
   scale_x_discrete(labels= c('Cause', 'Consequence', 'Mitigation'))+
   scale_fill_manual(values = segment_palette)
-ggsave(sprintf('../out/figures/paper-figure-%s.png', 5), width=5, height=5, unit='in', dpi=300)
+ggsave(sprintf('../out/figures/paper-figure-%s.png', 3), width=5, height=5, unit='in', dpi=300)
 
 
-#Figure 6 from Paper
+#Figure 4 from Paper
 
 library(ggpubr)
 
@@ -1179,7 +1181,7 @@ p <- lapply(c('conseq', 'mitig'), function(x){
 ggarrange(p[[1]], p[[2]], 
           labels = c("(a)", "(b)"),
           ncol = 2, nrow = 1, hjust = 0)
-ggsave(sprintf('../out/figures/paper-figure-%s.png', 6), width=5, height=5, unit='in', dpi=300)
+ggsave(sprintf('../out/figures/paper-figure-%s.png', 4), width=5, height=5, unit='in', dpi=300)
 
 
 #Figure 7 from Supplementary Material
@@ -1209,6 +1211,7 @@ tab_fsc <- df_qcompar %>%
   select(-sta_id, -f, -study) %>%
   pivot_wider(names_from = 'var', values_from = 'f_score')
 tab_fsc_diff_order <- q_results$zsc_n %>% 
+  as.tibble() %>%
   mutate(order = 1:nrow(.)) %>%
   mutate(diff = abs(fsc_f1-fsc_f2)) %>%
   mutate(nonsig = (q_results$qdc$sig_f1_f2=="")) %>%
