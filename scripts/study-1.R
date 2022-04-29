@@ -194,16 +194,16 @@ if(!file.exists(listDir)){
 } else{
   #Read old.list
   old.list <- read_csv(listDir, col_types = list(id = col_integer(), condition = col_integer(), can.mitigate = col_integer(), flagged = col_number(), list_key = col_character(), comment_key = col_character(), comment_content = col_character(), list_content = col_character(), rank = col_integer(), mms_compat = col_number(), human_code = col_character(), human_comment = col_character()))
-  #Add new IDs to old list
-  old.list <- old.list %>%
-    #First, match old IDs to completion_order
-    left_join(exist.id) %>%
-    #Remove old IDs
-    select(-id, -ResponseId) %>%
-    #Add new IDs
-    left_join(select(dat.full, c(id, completion_order))) %>%
-    #Remove completion_order
-    select(-completion_order)
+  #Add new IDs to old list (if required, if not, comment this out)
+  # old.list <- old.list %>%
+  #   #First, match old IDs to completion_order
+  #   left_join(exist.id) %>%
+  #   #Remove old IDs
+  #   select(-id, -ResponseId) %>%
+  #   #Add new IDs
+  #   left_join(select(dat.full, c(id, completion_order))) %>%
+  #   #Remove completion_order
+  #   select(-completion_order)
   #Append new data
   tb.list %>%
     mutate(human_code = as.character(human_code)) %>%

@@ -152,7 +152,7 @@ dat.clean <- dat.m %>%
   rename_v("Q44_", "EWS_") %>%
   rename_v("Q999_", "specs_")
 #4. Import Q sort data
-dat.m_qsort <- read.csv("../data-raw/study-2-qsort.csv", stringsAsFactors = F, header = F)
+dat.m_qsort <- read.csv("../data/study-2-qsort.csv", stringsAsFactors = F, header = F)
 #Assign data column names, based on schema used to create MySQL db, see ../study2/data/schema.txt
 colnames(dat.m_qsort) <- c(
   paste0("pref_sta_", 1:30),
@@ -431,6 +431,7 @@ q_results$qdc <- qdc(q_sorts, q_factor_num*2, q_results$zsc, q_results$f_char$sd
 
 #[ATP] export some of the Q sort results:
 df_qres <- q_results$zsc %>%
+  as.data.frame %>%
   cbind(q_results$zsc_n) %>%
   rownames_to_column(var = "sta_id")
 df_qres %>%
@@ -906,7 +907,7 @@ if(!file.exists('../out/study-2-glm_all_scaled.csv')){
 #####[ATP]Figures and Tables#####
 #################################
 index_fig <- 2 #to index figures (e.g., Figure 2)
-index_tbl <- 2 #to index tables (e.g., Table 2)
+index_tbl <- 1 #to index tables (e.g., Table 1)
 specify_decimal <- function(x, k) trimws(format(round(x, k), nsmall=k)) #to round numbers
 
 ####Scree plot of Q sort components
@@ -930,7 +931,7 @@ tibble(num = factor_range, eigen = head(q_fa$values, tail(factor_range, 1))) %>%
   scale_x_continuous(name='Factor number', breaks = factor_range)+
   geom_vline(xintercept = 1.5, linetype = 'dashed')+
   apatheme
-ggsave(sprintf('../out/figures/paper-figure-%s.png', index_fig), width=5, height=5, unit='in', dpi=300)
+#ggsave(sprintf('../out/figures/paper-figure-%s.png', index_fig), width=5, height=5, unit='in', dpi=300)
 index_fig <- index_fig + 1 #increment counter
 
 ####Correlations of psychological characteristics
@@ -1155,14 +1156,19 @@ c_range <- paste0(c_min,'-',c_max)
 construct_terms <- construct_terms %>%
   mutate(range = ifelse(is.na(range), ifelse(full == 'SVSS_C', c_range, st_range), range))
 
-#make into nice table, inc. rearrange columents and dropping full
+#make into nice table, inc. rearrange columens and dropping full
 construct_terms <- construct_terms %>%
   mutate_all(.funs = list(~ ifelse(is.na(.), 'na', .)))
 
 df <- construct_terms %>%
   select(-f1,-f2,-f3,-des) %>%
-  select(abbrev:measure, num, alp, range, example, reference) 
+  #select(abbrev:measure, num, alp, range, example, reference) 
+  select(measure, reference, num, alp, range, example)
 
+write_csv(df, sprintf('../out/tables/paper-table-%s.csv', index_tbl))
+index_tbl <- index_tbl + 1
+
+  
 dd <- as.dist((1-cormat)/2)
 hc <- hclust(dd)
 cormat <-cormat[hc$order, hc$order]
@@ -1244,10 +1250,10 @@ cormat %>%
   guides(fill= guide_colorbar(barheight=4, barwidth = .5,
                               ticks.colour = "black",
                               frame.colour = "black"))
-ggsave(sprintf('../out/figures/paper-figure-%s.png', index_fig), width=5, height=5, unit='in', dpi=300)
-index_fig <- index_fig + 1 #increment counter
+#ggsave(sprintf('../out/figures/paper-figure-%s.png', index_fig), width=5, height=5, unit='in', dpi=300)
 
 ####Regression model figure (paper)
+index_fig <- 2 #increment counter
 results_glm <- cvres_all_scaled
 results_bootstrap <- glmCI_all_scaled
 #results_classification <- 'mm'
@@ -1292,7 +1298,7 @@ glm_comb <- glm_cis %>%
   left_join(glm_coefs, by = c('pred', 'outcome'))
 df_pred_order <- glm_comb %>%
   left_join(rename(construct_terms, pred = full), by = 'pred') %>%
-  mutate(pred = abbrev) %>%
+  mutate(pred = measure) %>%
   mutate(intersects_zero = sign(ci_lower) != sign(ci_upper)) %>%
   group_by(pred) %>%
   summarise(m = max(abs(coef)), all_intersects_zero = all(intersects_zero)) %>%
@@ -1313,7 +1319,7 @@ zero_constructs <- glm_comb %>%
   nrow()
 p <- glm_comb %>%
   left_join(rename(construct_terms, pred = full), by = 'pred') %>%
-  mutate(pred = abbrev) %>%
+  mutate(pred = measure) %>%
   mutate(pred = fct_relevel(pred, pred_order_levels)) %>%
   mutate(segment = ifelse(
     outcome == 'f1',
@@ -1357,11 +1363,13 @@ index_fig <- index_fig + 1 #increment counter
 
 ####Table 2 of paper
 tab_fsc <- q_results$zsc_n %>%
+  as.tibble %>%
   mutate(order = 1:nrow(.)) %>%
   left_join(statement_text, by = 'order') %>%
   mutate(theme = c(1, 3, 5, 2, 5, 4, 3, 2, 5, 4, 3, 2, 2, 4, 3, 3, 2, 4, 5, 5, 3, 4, 1, 1, 1, 5, 1, 2, 4, 1))
 #List statements from highest z score difference to least
 tab_fsc_diff_order <- q_results$zsc_n %>% 
+  as.tibble %>%
   mutate(order = 1:nrow(.)) %>%
   mutate(diff = abs(fsc_f1-fsc_f2)) %>%
   mutate(nonsig = (q_results$qdc$sig_f1_f2=="")) %>%
@@ -1392,7 +1400,7 @@ index_tbl <- index_tbl + 1
 
 ####Table of survey scale means/sd
 tbl_scales <- construct_terms %>%
-  select(abbrev, des, f1, f3, f2)
+  select(measure, des, f1, f3, f2)
 colnames(tbl_scales) <- c('Scale', 'Overall', 'Acceptor', 'Fencesitter', 'Sceptic')
 write_csv(tbl_scales, sprintf('../out/tables/paper-table-%s.csv', index_tbl))
 
@@ -1441,8 +1449,16 @@ glm_comb <- glm_cis %>%
 
 construct_terms <- tibble(
   full = sort(unique(glm_comb$pred)),
-  abbrev = c(paste0('MMS_', c( 'CAU_C', 'CAU_E', 'CAU_N', 'CON_P', 'CON_S', 'HUM', 'MIT_C', 'MIT_E', 'MIT_G')))
-)
+  abbrev = c("Perceptions of Carbon Emission Causes", 
+             "Perceptions of Environmental Harm Causes",
+             "Perceptions of Natural Causes",
+             "Perceived Personal Consequences",
+             "Perceived Societal Consequences",
+             "Perceived Human Contribution",
+             "Perceived Effectiveness of Carbon Policies",
+             "Perceived Effectiveness of Engineering Policies",
+             "Perceived Effectiveness of Green Policies")
+  )
 #For all...
 #Arrange graph such in order of differences in predictor coefs
 df_pred_order <- glm_comb %>%
